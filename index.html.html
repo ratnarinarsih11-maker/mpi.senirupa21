@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Ayo Kenali Bangun Datar</title>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Baloo+2:wght@500;700;800&display=swap">
+<style>
+:root{--bg:#E8F5FF;--card:#fff;--ink:#1B2A41;--soft:#5B6B82;--line:#CFE3F5;--coral:#FF6B5A;--blue:#2F80ED;--yellow:#FFC93C;--green:#2EC27E;--ok:#DDF7E8;--okb:#2EC27E;--no:#FFF0D6;--nob:#F29A1F;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media (prefers-color-scheme:dark){:root:not([data-theme="light"]){--bg:#12233A;--card:#1D3552;--ink:#F2F7FF;--soft:#AFC2DA;--line:#2E4C70;--ok:#17402E;--no:#4A3818}}
+:root[data-theme="dark"]{--bg:#12233A;--card:#1D3552;--ink:#F2F7FF;--soft:#AFC2DA;--line:#2E4C70;--ok:#17402E;--no:#4A3818}
+html{scroll-padding-top:env(safe-area-inset-top,0px)}
+*{box-sizing:border-box}
+body{margin:0;background:var(--bg);color:var(--ink);font-family:"Baloo 2","Comic Sans MS","Trebuchet MS",sans-serif;font-size:19px;line-height:1.5}
+main{max-width:760px;margin:0 auto;padding:12px 16px 40px}
+#steps{display:flex;gap:6px;overflow-x:auto;padding:6px 0 12px}
+.st{flex:1 0 auto;border:2px solid var(--line);background:var(--card);color:var(--ink);border-radius:999px;padding:4px 12px;font:inherit;font-size:15px;cursor:pointer;display:flex;gap:6px;align-items:center}
+.st b{font-weight:600}
+.st.on{background:var(--yellow);border-color:var(--yellow);color:#1B2A41}
+.st.done{border-color:var(--green)}
+.panel{background:var(--card);border-radius:28px;padding:22px;border:3px solid var(--line)}
+h1{font-size:2.3rem;line-height:1.1;margin:.2em 0;font-weight:800}
+h2{font-size:1.6rem;margin:.1em 0 .4em;font-weight:800}
+p{margin:.4em 0}
+.soft{color:var(--soft)}
+.btn{font:inherit;font-weight:700;font-size:1.1rem;border:0;border-radius:18px;padding:10px 24px;background:var(--blue);color:#fff;cursor:pointer;box-shadow:0 5px 0 #1D5FB8;transition:transform .12s}
+.btn:active{transform:translateY(4px);box-shadow:0 1px 0 #1D5FB8}
+.btn:disabled{background:#9AA9BC;box-shadow:0 5px 0 #7B8A9E;cursor:not-allowed}
+.btn.alt{background:var(--green);box-shadow:0 5px 0 #1D8F5C}
+:focus-visible{outline:4px solid var(--yellow);outline-offset:3px}
+.cover{text-align:center}
+.floaters{display:flex;justify-content:center;gap:10px;margin-bottom:6px}
+.floaters svg{animation:bob 2.6s ease-in-out infinite}
+.floaters svg:nth-child(2){animation-delay:.3s}.floaters svg:nth-child(3){animation-delay:.6s}.floaters svg:nth-child(4){animation-delay:.9s}
+@keyframes bob{50%{transform:translateY(-12px) rotate(4deg)}}
+.id{display:inline-block;text-align:left;background:var(--bg);border-radius:18px;padding:10px 18px;margin:10px 0;font-size:16px}
+input[type=text]{font:inherit;font-size:1.1rem;border:3px solid var(--line);border-radius:16px;padding:8px 14px;width:min(100%,320px);background:var(--card);color:var(--ink);text-align:center}
+.goal{display:flex;gap:14px;align-items:center;background:var(--bg);border-radius:20px;padding:14px}
+.goal .big{font-size:2.6rem}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:12px;margin:14px 0}
+.shp{border:4px solid var(--line);background:var(--card);border-radius:22px;padding:10px;font:inherit;color:var(--ink);cursor:pointer;text-align:center;transition:transform .15s}
+.shp:hover{transform:scale(1.04)}
+.shp.on{border-color:var(--yellow);background:var(--bg)}
+.shp.seen::after{content:" ✓";color:var(--green);font-weight:800}
+.detail{display:flex;gap:16px;align-items:center;flex-wrap:wrap;background:var(--bg);border-radius:22px;padding:16px}
+.detail ul{margin:.3em 0;padding-left:1.2em}
+.pop{animation:pop .35s ease-out}
+@keyframes pop{0%{transform:scale(.7)}70%{transform:scale(1.08)}100%{transform:scale(1)}}
+.vis{text-align:center;font-size:5rem;line-height:1.1;margin:6px 0}
+.q{font-size:1.35rem;font-weight:700;margin:6px 0 14px}
+.opts{display:grid;grid-template-columns:repeat(auto-fit,minmax(150px,1fr));gap:10px}
+.opt{font:inherit;font-weight:700;font-size:1.1rem;border:3px solid var(--line);background:var(--card);color:var(--ink);border-radius:18px;padding:12px;cursor:pointer}
+.opt:hover:not(:disabled){border-color:var(--blue)}
+.opt.right{background:var(--ok);border-color:var(--okb)}
+.opt.wrong{background:var(--no);border-color:var(--nob)}
+.row{display:flex;gap:10px;flex-wrap:wrap;justify-content:center;align-items:center}
+.fb{margin-top:14px;border-radius:20px;padding:14px 16px;font-weight:600}
+.fb.ok{background:var(--ok);border:3px solid var(--okb)}
+.fb.no{background:var(--no);border:3px solid var(--nob)}
+.bar{height:14px;background:var(--line);border-radius:99px;overflow:hidden;margin-bottom:12px}
+.bar i{display:block;height:100%;background:var(--green);transition:width .4s}
+.tag{display:inline-block;background:var(--yellow);color:#1B2A41;border-radius:99px;padding:0 12px;font-size:15px;font-weight:700}
+.stars{font-size:3.2rem;text-align:center}
+.emo{font-size:2.4rem;background:var(--card);border:4px solid var(--line);border-radius:22px;padding:6px 14px;cursor:pointer;font-family:inherit}
+.emo.on{border-color:var(--yellow);background:var(--bg);transform:scale(1.08)}
+label.ck{display:flex;gap:10px;align-items:center;margin:8px 0}
+label.ck input{width:26px;height:26px;accent-color:var(--green)}
+.sp{display:flex;justify-content:space-between;margin-top:18px;gap:10px}
+@media (prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+</style>
+</head>
+<body>
+<main>
+<nav id="steps" aria-label="Langkah belajar"></nav>
+<div id="app" class="panel" aria-live="polite"></div>
+</main>
+<script>
+const $=s=>document.querySelector(s),app=$('#app');
+const COL={persegi:'#FF6B5A','persegi panjang':'#2F80ED',segitiga:'#FFC93C',lingkaran:'#2EC27E'};
+function sh(n,s){
+  s=s||110;const c=COL[n];let b='',y=58;
+  if(n==='persegi')b='<rect x="25" y="25" width="70" height="70" rx="8"/>';
+  if(n==='persegi panjang'){b='<rect x="8" y="32" width="104" height="56" rx="8"/>'}
+  if(n==='segitiga'){b='<polygon points="60,14 108,98 12,98" stroke-linejoin="round" stroke="'+c+'" stroke-width="8"/>';y=76}
+  if(n==='lingkaran')b='<circle cx="60" cy="60" r="48"/>';
+  return '<svg width="'+s+'" height="'+s+'" viewBox="0 0 120 120" role="img" aria-label="'+n+'"><g fill="'+c+'">'+b+'</g><g fill="#1B2A41"><circle cx="47" cy="'+y+'" r="5"/><circle cx="73" cy="'+y+'" r="5"/></g><path d="M48 '+(y+12)+' Q60 '+(y+22)+' 72 '+(y+12)+'" stroke="#1B2A41" stroke-width="4" fill="none" stroke-linecap="round"/></svg>';
+}
+const SH=['persegi','persegi panjang','segitiga','lingkaran'];
+const INFO={
+ 'persegi':{c:['Punya 4 sisi yang sama panjang','Punya 4 sudut'],x:'ubin lantai, sapu tangan, roti tawar'},
+ 'persegi panjang':{c:['Punya 4 sisi','2 sisi panjang dan 2 sisi pendek','Punya 4 sudut'],x:'pintu, buku tulis, papan tulis'},
+ 'segitiga':{c:['Punya 3 sisi lurus','Punya 3 sudut'],x:'potongan pizza, atap rumah, rambu jalan'},
+ 'lingkaran':{c:['Bentuknya bulat','Tidak punya sudut','Tidak punya sisi lurus'],x:'jam dinding, piring, roda sepeda'}
+};
+const STEPS=[['🏠','Mulai'],['🎯','Tujuan'],['📘','Materi'],['🎮','Main'],['✏️','Kuis'],['🌟','Hasil']];
+const S={p:0,name:'',seen:{},sel:'persegi',score:0,mood:''};
+const OKS=['Hebat sekali! Jawabanmu benar. ⭐','Pintar! Kamu benar. 🎉','Keren! Kamu sudah paham bentuknya. 👏','Mantap! Tepat sekali. 🌟'];
+const NOS=['Belum tepat, tidak apa-apa.','Hampir benar, ayo coba lagi nanti.','Jangan menyerah ya.'];
+const MOT=['Ayo semangat, kamu pasti bisa! 💪','Salah itu bagian dari belajar. 🌈','Terus berlatih, kamu makin pintar! 😊'];
+const pick=a=>a[Math.floor(Math.random()*a.length)];
+function speak(t){try{const u=new SpeechSynthesisUtterance(t);u.lang='id-ID';u.rate=.85;speechSynthesis.cancel();speechSynthesis.speak(u)}catch(e){}}
+function go(n){S.p=n;view()}
+function view(){
+  $('#steps').innerHTML=STEPS.map((s,i)=>'<button class="st '+(i===S.p?'on':i<S.p?'done':'')+'" onclick="go('+i+')"><span>'+s[0]+'</span><b>'+s[1]+'</b></button>').join('');
+  V[S.p]();window.scrollTo(0,0);
+}
+const V=[cover,tujuan,materi,aktivitas,kuis,hasil];
+
+function cover(){
+  app.innerHTML='<section class="cover"><div class="floaters">'+SH.map(n=>sh(n,78)).join('')+'</div>'+
+  '<span class="tag">Matematika · Kelas 2 · Fase A</span><h1>Ayo Kenali Bangun Datar!</h1>'+
+  '<p class="soft">Belajar bersama persegi, persegi panjang, segitiga, dan lingkaran.</p>'+
+  '<div class="id">Mata pelajaran: Matematika<br>Materi: Bangun Datar<br>Disusun oleh: Ratna Rinarsih, SD Negeri Pengkol</div>'+
+  '<p>Siapa namamu?</p><input type="text" id="nm" maxlength="24" placeholder="Tulis namamu" value="'+S.name.replace(/"/g,'')+'" aria-label="Nama murid">'+
+  '<p><button class="btn alt" id="go">Mulai Belajar ▶</button></p></section>';
+  $('#go').onclick=()=>{S.name=$('#nm').value.trim();go(1)};
+}
+function tujuan(){
+  app.innerHTML='<h2>Halo'+(S.name?', '+S.name:'')+'! Hari ini kamu akan belajar</h2>'+
+  '<div class="goal"><div class="big">🎯</div><div><b>Mengenal dan menyebutkan</b> bangun datar: persegi, persegi panjang, segitiga, dan lingkaran.</div></div>'+
+  '<p class="soft">Kamu akan membaca, bermain mencocokkan, lalu menjawab 10 soal.</p>'+
+  '<div class="row">'+SH.map(n=>sh(n,70)).join('')+'</div>'+
+  '<div class="sp"><button class="btn" onclick="go(0)">◀ Kembali</button><button class="btn alt" onclick="go(2)">Ayo Belajar ▶</button></div>';
+}
+function materi(){
+  const n=S.sel,i=INFO[n],cnt=Object.keys(S.seen).length;
+  S.seen[n]=1;const c2=Object.keys(S.seen).length;
+  app.innerHTML='<h2>Kenalan dengan Bangun Datar</h2><p class="soft">Ketuk setiap bentuk untuk melihat cirinya. ('+c2+' dari 4)</p>'+
+  '<div class="grid">'+SH.map(s=>'<button class="shp '+(s===n?'on ':'')+(S.seen[s]?'seen':'')+'" onclick="S.sel=\''+s+'\';materi()">'+sh(s,72)+'<div><b>'+s+'</b></div></button>').join('')+'</div>'+
+  '<div class="detail"><div class="pop">'+sh(n,130)+'</div><div style="flex:1;min-width:200px"><h2>'+n.charAt(0).toUpperCase()+n.slice(1)+'</h2><ul>'+i.c.map(x=>'<li>'+x+'</li>').join('')+'</ul><p><b>Contoh benda:</b> '+i.x+'</p>'+
+  '<button class="btn" style="font-size:1rem;padding:6px 16px" onclick="speak(\''+n+'. '+i.c.join('. ')+'\')">🔊 Dengarkan</button></div></div>'+
+  '<div class="sp"><button class="btn" onclick="go(1)">◀ Kembali</button><button class="btn alt" '+(c2<4?'disabled':'')+' onclick="go(3)">'+(c2<4?'Ketuk 4 bentuk dulu':'Ayo Bermain ▶')+'</button></div>';
+}
+
+const ACT=[
+ {v:'🕒',q:'Jam dinding bentuknya seperti apa?',a:'lingkaran',e:'Jam dinding itu bulat dan tidak punya sudut, jadi bentuknya lingkaran.'},
+ {v:'🚪',q:'Pintu bentuknya seperti apa?',a:'persegi panjang',e:'Pintu punya 2 sisi panjang dan 2 sisi pendek, jadi bentuknya persegi panjang.'},
+ {v:'🍕',q:'Potongan pizza bentuknya seperti apa?',a:'segitiga',e:'Potongan pizza punya 3 sisi dan 3 sudut, jadi bentuknya segitiga.'},
+ {v:'🟧',q:'Ubin lantai ini bentuknya seperti apa?',a:'persegi',e:'Keempat sisi ubin sama panjang, jadi bentuknya persegi.'},
+ {v:'📒',q:'Buku tulis bentuknya seperti apa?',a:'persegi panjang',e:'Buku tulis punya sisi panjang dan sisi pendek, jadi bentuknya persegi panjang.'}
+];
+let ai=0;
+function aktivitas(){
+  if(ai>=ACT.length){ai=0;app.innerHTML='<div class="cover"><div class="vis">🎉</div><h2>Permainan selesai!</h2><p>Kamu sudah bisa mencocokkan benda dengan bangun datar.</p><div class="sp"><button class="btn" onclick="ai=0;aktivitas()">Main lagi</button><button class="btn alt" onclick="go(4)">Ke Kuis ▶</button></div></div>';return}
+  card(ACT[ai],'Cocokkan benda ke-'+(ai+1)+' dari '+ACT.length,(ai)/ACT.length*100,true,()=>{ai++;aktivitas()},'🎮 Ayo Cocokkan! Pilih bentuk yang tepat.');
+}
+
+const Q=[
+ {t:'pg',v:sh('lingkaran',120),q:'Bangun datar apakah ini?',o:['persegi','lingkaran','segitiga'],a:['lingkaran'],e:'Bentuk ini bulat dan tidak punya sudut, jadi namanya lingkaran.'},
+ {t:'pg',v:'🔺',q:'Bangun datar yang punya 3 sisi adalah...',o:['persegi','lingkaran','segitiga'],a:['segitiga'],e:'Segitiga punya 3 sisi dan 3 sudut.'},
+ {t:'pg',v:'🕒',q:'Jam dinding bentuknya seperti...',o:['segitiga','lingkaran','persegi panjang'],a:['lingkaran'],e:'Jam dinding bulat, jadi seperti lingkaran.'},
+ {t:'pg',v:sh('persegi',110),q:'Bangun datar yang keempat sisinya sama panjang adalah...',o:['persegi','persegi panjang','segitiga'],a:['persegi'],e:'Persegi punya 4 sisi yang sama panjang.'},
+ {t:'pg',v:'🚪',q:'Pintu bentuknya seperti...',o:['persegi','persegi panjang','lingkaran'],a:['persegi panjang'],e:'Pintu punya sisi panjang dan sisi pendek, jadi seperti persegi panjang.'},
+ {t:'isi',v:sh('segitiga',120),q:'Tulis nama bangun datar ini:',a:['segitiga'],e:'Bangun ini punya 3 sisi dan 3 sudut, namanya segitiga.'},
+ {t:'isi',v:sh('persegi panjang',120),q:'Tulis nama bangun datar ini:',a:['persegi panjang','persegipanjang'],e:'Bangun ini punya 2 sisi panjang dan 2 sisi pendek, namanya persegi panjang.'},
+ {t:'isi',v:sh('persegi',110),q:'Tulis nama bangun datar ini:',a:['persegi'],e:'Keempat sisinya sama panjang, namanya persegi.'},
+ {t:'isi',v:'⚪',q:'Bangun datar yang tidak punya sudut dan sisi lurus namanya...',a:['lingkaran'],e:'Lingkaran bentuknya bulat, tidak punya sudut dan tidak punya sisi lurus.'},
+ {t:'isi',v:sh('persegi panjang',100),q:'Ada berapa sisi pada persegi panjang? (tulis angka)',a:['4','empat'],e:'Persegi panjang punya 4 sisi: 2 panjang dan 2 pendek.'}
+];
+let qi=0;
+function kuis(){
+  if(qi===0&&!S.started){S.started=1;S.score=0}
+  if(qi>=Q.length){S.started=0;qi=0;go(5);return}
+  card(Q[qi],'Soal '+(qi+1)+' dari '+Q.length+(Q[qi].t==='pg'?' · Pilihan ganda':' · Isian'),qi/Q.length*100,false,()=>{qi++;kuis()},'');
+}
+
+function card(q,label,pct,retry,next,intro){
+  const pg=q.t==='pg'||retry;
+  const opts=q.o||SH;
+  app.innerHTML=(intro?'<p class="soft">'+intro+'</p>':'')+'<div class="bar"><i style="width:'+pct+'%"></i></div><span class="tag">'+label+'</span>'+
+  '<div class="vis pop">'+q.v+'</div><div class="q">'+q.q+'</div>'+
+  (pg?'<div class="opts">'+opts.map(o=>'<button class="opt" data-v="'+o+'">'+o.charAt(0).toUpperCase()+o.slice(1)+'</button>').join('')+'</div>'
+     :'<div class="row"><input type="text" id="ans" maxlength="20" placeholder="Tulis jawabanmu" aria-label="Jawaban"><button class="btn" id="ok">Periksa</button></div>')+
+  '<div id="fb"></div>';
+  const ans=[].concat(q.a);
+  function finish(v,btn){
+    const good=ans.indexOf(v.trim().toLowerCase().replace(/\s+/g,' '))>-1;
+    const fb=$('#fb');
+    if(!retry&&good)S.score++;
+    document.querySelectorAll('.opt').forEach(b=>{if(!retry||good)b.disabled=true;if(ans.indexOf(b.dataset.v)>-1&&(good||!retry))b.classList.add('right')});
+    if(btn&&!good)btn.classList.add('wrong');
+    if(!pg){$('#ans').disabled=true;$('#ok').disabled=true}
+    if(good){fb.innerHTML='<div class="fb ok pop">'+pick(OKS)+'</div><div class="sp"><span></span><button class="btn alt" id="nx">Lanjut ▶</button></div>';$('#nx').onclick=next}
+    else if(retry){fb.innerHTML='<div class="fb no">'+pick(NOS)+' '+q.e+' '+pick(MOT)+'</div>'; if(btn)setTimeout(()=>btn.classList.remove('wrong'),900)}
+    else{fb.innerHTML='<div class="fb no">'+pick(NOS)+' '+q.e+' Jawaban yang benar: <b>'+ans[0]+'</b>. '+pick(MOT)+'</div><div class="sp"><span></span><button class="btn alt" id="nx">Lanjut ▶</button></div>';$('#nx').onclick=next}
+  }
+  if(pg)document.querySelectorAll('.opt').forEach(b=>b.onclick=()=>finish(b.dataset.v,b));
+  else{const f=()=>finish($('#ans').value,null);$('#ok').onclick=f;$('#ans').addEventListener('keydown',e=>{if(e.key==='Enter')f()})}
+}
+
+function hasil(){
+  const s=S.score,st=s>=9?'⭐⭐⭐':s>=6?'⭐⭐':'⭐';
+  const msg=s>=9?'Luar biasa! Kamu sudah mengenal bangun datar dengan sangat baik.':s>=6?'Bagus! Sedikit lagi kamu jadi ahli bangun datar.':'Kamu sudah berusaha. Yuk belajar lagi supaya makin pintar!';
+  app.innerHTML='<div class="stars pop">'+st+'</div><h2 style="text-align:center">'+(S.name?S.name+', ':'')+'skormu '+s+' dari 10</h2><p style="text-align:center">'+msg+'</p>'+
+  '<h2>Refleksi: bagaimana perasaanmu?</h2><div class="row">'+
+  [['😄','Aku paham banget'],['🙂','Aku mulai paham'],['🤔','Aku perlu belajar lagi']].map(m=>'<button class="emo '+(S.mood===m[1]?'on':'')+'" onclick="S.mood=\''+m[1]+'\';hasil()" aria-label="'+m[1]+'">'+m[0]+'</button>').join('')+'</div>'+
+  (S.mood?'<div class="fb ok" style="margin-top:12px">Kamu memilih: <b>'+S.mood+'</b>. '+(S.mood==='Aku perlu belajar lagi'?'Tidak apa-apa. Coba baca materi sekali lagi ya, kamu pasti bisa! 💪':'Terima kasih sudah jujur. Teruslah belajar! 🌈')+'</div>':'')+
+  '<h2 style="margin-top:16px">Centang yang sudah bisa kamu lakukan</h2>'+
+  '<label class="ck"><input type="checkbox"> Aku bisa menyebutkan 4 bangun datar</label>'+
+  '<label class="ck"><input type="checkbox"> Aku bisa menemukan bangun datar di sekitar rumah</label>'+
+  '<label class="ck"><input type="checkbox"> Aku bisa menceritakan ciri-ciri bangun datar</label>'+
+  '<div class="sp"><button class="btn" onclick="go(2)">Baca materi lagi</button><button class="btn alt" onclick="qi=0;S.started=0;go(4)">Ulangi Kuis</button></div>';
+}
+view();
+</script>
+</body>
+</html>
